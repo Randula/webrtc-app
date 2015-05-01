@@ -1,0 +1,18 @@
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.error_message_above_field {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #FF0000;
+    text-align: left;
+    padding-left: 0px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+}
