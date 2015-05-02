@@ -48,11 +48,6 @@
         <appender-ref ref="console"/>
     </category>
 
-    <category name="org.springframework" additivity="false">
-        <priority value="error"/>
-        <appender-ref ref="error"/>
-    </category>
-
     <category name="org.apache.cxf" additivity="false">
         <priority value="debug"/>
         <appender-ref ref="trace"/>
@@ -61,6 +56,21 @@
     <category name="com.mchange" additivity="false">
         <priority value="error"/>
         <appender-ref ref="error"/>
+    </category>
+
+
+    <category name="org" additivity="false">
+        <priority value="error" />
+        <appender-ref ref="error" />
+    </category>
+
+    <category name="org.hibernate" additivity="false">
+        <priority value="error" />
+        <appender-ref ref="error" />
+    </category>
+
+    <category name="org.springframework" additivity="false">
+        <priority value="error" />
     </category>
 
     <root>

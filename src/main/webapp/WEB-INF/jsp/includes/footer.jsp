@@ -4,7 +4,7 @@
  <div id="footer">
      <br>
      <hr/>
-         <p style="text-align: center">  &copy; 2013-2014 hSenid Mobile Solutions. All rights reserved.</p>
+         <p style="text-align: center">  &copy; 2014-2015 hSenid Mobile Solutions. All rights reserved.</p>
  </div>
 </footer>
 

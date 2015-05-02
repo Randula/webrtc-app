@@ -91,38 +91,6 @@ public class AdItemService {
         Matcher matcher = pattern.matcher(data);
         return matcher.matches();
     }
-//
-//    private String requestScriptFromSdp(String adId, String mobileNumber) {
-//
-//        if (componentCreated(adId, mobileNumber)) {
-//            final String scriptUrlPart = "app/" + appId + "/password/" + password + "/ref/" + adId;
-//            Map<String, Object> apiScriptResponse = restTemplate.getForObject(requestScriptUrl + scriptUrlPart, Map.class);
-//            if (ResponseCode.S1000.name().equals(apiScriptResponse.get("statusCode"))) {
-//                return (String) apiScriptResponse.get("script");
-//            }
-//        }
-//        return "";
-//    }
-
-//    private boolean componentIsActive(String adId) {
-//        RevokeNumberRequest revokeNumberRequest = new RevokeNumberRequest();
-//        revokeNumberRequest.setApplicationId(appId);
-//        revokeNumberRequest.setPassword(password);
-//        revokeNumberRequest.setExternalRefNo(adId);
-//        Map<String, Object> revokeNumberResponse = restTemplate.postForObject(changeComponentUrl, revokeNumberRequest, Map.class);
-//        return ResponseCode.S1000.name().equals(revokeNumberResponse.get("statusCode"));
-//    }
-
-//    private boolean componentCreated(String adId, String mobileNumber) {
-//        ProvisionNumberRequest provisionNumberRequest = new ProvisionNumberRequest();
-//        provisionNumberRequest.setApplicationId(appId);
-//        provisionNumberRequest.setPassword(password);
-//        provisionNumberRequest.setExternalRefNo(adId);
-//        provisionNumberRequest.setSubscriberId(mobileNumber);
-//        Map<String, Object> provisionNumberResponse = restTemplate.postForObject(createComponentUrl, provisionNumberRequest, Map.class);
-//
-//        return ResponseCode.S1000.name().equals(provisionNumberResponse.get("statusCode"));
-//    }
 
     public List<AdItem> getAllAdItems() {
         return adItemDao.getAllAdItems();

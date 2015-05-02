@@ -54,26 +54,12 @@ public class HomeController {
     @Autowired
     private WebRTCApi webRTCApi;
 
-//    @Autowired
-//    private SubscriberValidator subscriberValidator;
-
     @RequestMapping(value = "/listAds", method = RequestMethod.GET)
     public ModelAndView homePage(ModelMap model) {
         logger.debug("Request Received");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("adItemList", adItemService.getAllAdItems());
         modelAndView.setViewName("listAllAds");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/displayItems", method = RequestMethod.GET)
-    public ModelAndView displayAd(@RequestParam("adId") String adId, Model model) {
-        logger.debug("Request Received");
-        AdItem adItem = adItemService.getAdUnitById(adId);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("adItem", adItem);
-        modelAndView.addObject("webrtcInternalId", 0);
-        modelAndView.setViewName("displayAd");
         return modelAndView;
     }
 
@@ -99,17 +85,23 @@ public class HomeController {
 
         if (!result.hasErrors()) {
             String adId = UUID.randomUUID().toString();
-            Boolean isComponentCreated = webRTCApi.createComponent(adId, adItemForm.getMobileNumber());
 
-            if (isComponentCreated) {
-                String requestedScript = webRTCApi.requestScript(adId);
-                boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, requestedScript, uploadPosterURL);
-                if (isAdItemCreated) {
-                    modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
-                } else {
 
-                }
-            }
+            boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, "Script", uploadPosterURL);
+
+
+//            Boolean isComponentCreated = webRTCApi.createComponent(adId, adItemForm.getMobileNumber());
+//
+//            if (isComponentCreated) {
+//                String requestedScript = webRTCApi.requestScript(adId);
+//                boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, requestedScript, uploadPosterURL);
+//                if (isAdItemCreated) {
+//                    modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
+//                } else {
+//                    modelAndView.addObject("errorMessage", "Error occurred while processing.");
+//
+//                }
+//            }
         }
         return modelAndView;
     }

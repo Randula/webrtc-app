@@ -5,7 +5,7 @@
 
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://127.0.0.1:3306/ad_vert</property>
+        <property name="connection.url">jdbc:mysql://127.0.0.1:3306/webrtc_app</property>
         <property name="connection.username">user</property>
         <property name="connection.password">password</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>

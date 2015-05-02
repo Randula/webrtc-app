@@ -20,48 +20,36 @@
 <!-- Page Content -->
 <div class="container">
 
-<div class="row">
+    <c:if test="${fn:length(adItemList) gt 0}">
+    <br>
+    <c:forEach begin="0" items="${adItemList}" var="adItem" varStatus="rowCounter">
 
-    <div class="col-md-3">
-        <p class="lead">Sub Category</p>
-        <div class="list-group">
-            <a href="#" class="list-group-item active">TV</a>
-            <a href="#" class="list-group-item">Camera</a>
-            <a href="#" class="list-group-item">Gadgets</a>
-        </div>
-    </div>
 
-    <div class="col-md-9">
-
-        <c:if test="${fn:length(adItemList) gt 0}">
-            <hr style="color: #000000">
-            <br>
-            <c:forEach begin="0" items="${adItemList}" var="adItem">
+        <c:if test="${rowCounter.count % 3 == 1}">
+            <div class="row">
+            <tr>
+        </c:if>
+        <div class="col-md-4">
             <div class="well">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a class="pull-left" href="#">
-                            <img class="img-responsive" src="${adItem.posterUrl}" alt="">
-                        </a>
-                    </div>
-                    <c:url var="displayAd" value="displayItems.htm">
-                        <c:param name="adId" value="${adItem.adId}"/>
-                    </c:url>
-                    <div class="col-md-9">
-                        <h3><a href="${displayAd}"> ${adItem.adTopic} </a></h3>
-                        <h5>${adItem.date}</h5>
-                    </div>
-                </div>
+                <td><h3>${adItem.adTopic}</h3>
+                    <a href="#">  <img class="img-responsive" src="${adItem.posterUrl}" alt=""> </a>
+                    <br/>Price : ${adItem.itemPrice}
+                    <br/>${adItem.script}</td>
             </div>
-            </c:forEach>
+        </div>
+        <c:if test="${rowCounter.count % 3 == 0||rowCounter.count == fn:length(values)}">
+            </tr>
+            </div>
         </c:if>
 
-    </div>
+
+</c:forEach>
+</c:if>
 
 </div>
-    <jsp:include page="includes/footer.jsp"></jsp:include>
 
-</div>
+<jsp:include page="includes/footer.jsp"></jsp:include>
+
 
 </body>
 
