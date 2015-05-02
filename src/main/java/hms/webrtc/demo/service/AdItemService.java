@@ -12,8 +12,6 @@
 
 package hms.webrtc.demo.service;
 
-
-import hms.webrtc.demo.api.WebRTCApi;
 import hms.webrtc.demo.controller.bean.AdItemForm;
 import hms.webrtc.demo.controller.bean.AdvertisementType;
 import hms.webrtc.demo.dao.AdItemDao;
@@ -39,7 +37,6 @@ public class AdItemService {
     private String msisdnPatternTwo;
     private String codeOne;
     private String codeTwo;
-    private WebRTCApi webRTCApi;
 
     private static final Logger logger = LoggerFactory.getLogger(AdItemService.class);
 
@@ -118,11 +115,4 @@ public class AdItemService {
         this.codeTwo = codeTwo;
     }
 
-    public WebRTCApi getWebRTCApi() {
-        return webRTCApi;
-    }
-
-    public void setWebRTCApi(WebRTCApi webRTCApi) {
-        this.webRTCApi = webRTCApi;
-    }
 }

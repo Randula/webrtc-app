@@ -13,8 +13,6 @@
 
 package hms.webrtc.demo.controller;
 
-
-import hms.webrtc.demo.api.WebRTCApi;
 import hms.webrtc.demo.controller.bean.AdItemForm;
 import hms.webrtc.demo.controller.bean.AdvertisementType;
 import hms.webrtc.demo.domain.AdItem;
@@ -51,9 +49,6 @@ public class HomeController {
     @Autowired
     private AdItemService adItemService;
 
-    @Autowired
-    private WebRTCApi webRTCApi;
-
     @RequestMapping(value = "/listAds", method = RequestMethod.GET)
     public ModelAndView homePage(ModelMap model) {
         logger.debug("Request Received");
@@ -83,18 +78,15 @@ public class HomeController {
         modelAndView.addObject("adItemForm", adItemForm);
         modelAndView.setViewName("createAdItem");
 
-        if (!result.hasErrors()) {
-            String adId = UUID.randomUUID().toString();
-            Boolean isComponentCreated = webRTCApi.createComponent(adId, adItemForm.getMobileNumber());
+        // TODO Implement WebRTC API to Provision Component / Request Script and replace "adId"  & "Script" parameters.
 
-            if (isComponentCreated) {
-                String requestedScript = webRTCApi.requestScript(adId);
-                boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, requestedScript, uploadPosterURL);
-                if (isAdItemCreated) {
-                    modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
-                } else {
-                    modelAndView.addObject("errorMessage", "Error occurred while processing.");
-                }
+        if (!result.hasErrors()) {
+            boolean isItemCreatedSuccessfully
+                    = adItemService.saveAdItem(adItemForm, "adId", "Script", uploadPosterURL);
+            if (isItemCreatedSuccessfully) {
+                modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
+            } else {
+                modelAndView.addObject("errorMessage", "Error occurred while processing.");
             }
         }
         return modelAndView;
