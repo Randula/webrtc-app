@@ -85,23 +85,17 @@ public class HomeController {
 
         if (!result.hasErrors()) {
             String adId = UUID.randomUUID().toString();
+            Boolean isComponentCreated = webRTCApi.createComponent(adId, adItemForm.getMobileNumber());
 
-
-            boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, "Script", uploadPosterURL);
-
-
-//            Boolean isComponentCreated = webRTCApi.createComponent(adId, adItemForm.getMobileNumber());
-//
-//            if (isComponentCreated) {
-//                String requestedScript = webRTCApi.requestScript(adId);
-//                boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, requestedScript, uploadPosterURL);
-//                if (isAdItemCreated) {
-//                    modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
-//                } else {
-//                    modelAndView.addObject("errorMessage", "Error occurred while processing.");
-//
-//                }
-//            }
+            if (isComponentCreated) {
+                String requestedScript = webRTCApi.requestScript(adId);
+                boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, requestedScript, uploadPosterURL);
+                if (isAdItemCreated) {
+                    modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
+                } else {
+                    modelAndView.addObject("errorMessage", "Error occurred while processing.");
+                }
+            }
         }
         return modelAndView;
     }
