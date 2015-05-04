@@ -17,38 +17,52 @@
 
 <jsp:include page="includes/navbar.jsp"/>
 
-<!-- Page Content -->
-<div class="container">
-
-    <c:if test="${fn:length(adItemList) gt 0}">
-    <br>
-    <c:forEach begin="0" items="${adItemList}" var="adItem" varStatus="rowCounter">
-
-
-        <c:if test="${rowCounter.count % 3 == 1}">
-            <div class="row">
-            <tr>
-        </c:if>
-        <div class="col-md-4">
-            <div class="well">
-                <td><h3>${adItem.adTopic}</h3>
-                    <a href="#">  <img class="img-responsive" src="${adItem.posterUrl}" alt=""> </a>
-                    <br/>Price : ${adItem.itemPrice}
-                    <br/>${adItem.script}</td>
-            </div>
-        </div>
-        <c:if test="${rowCounter.count % 3 == 0||rowCounter.count == fn:length(values)}">
-            </tr>
-            </div>
-        </c:if>
-
-
-</c:forEach>
-</c:if>
-
+<div class="top-bar">
+    <div class="container">
+        <h2>Advert Listing</h2>
+    </div>
 </div>
 
-<jsp:include page="includes/footer.jsp"></jsp:include>
+<div class="content-area">
+    <!-- Page Content -->
+    <div class="container">
+
+        <c:if test="${fn:length(adItemList) gt 0}">
+            <div class="row">
+                <c:forEach begin="0" items="${adItemList}" var="adItem" varStatus="rowCounter">
+
+                    <div class="col-md-3">
+                        <div class="thumbnail">
+                            <%--<img src="${adItem.posterUrl}">--%>
+                            <div class="product-img">
+                                <img src="img/thumb-default.gif">
+                            </div>
+                            <div class="caption">
+                                <h3>${adItem.adTopic}</h3>
+                                <h5>Product Description Here</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img src="img/button0.png">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="product-price">${adItem.itemPrice}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </c:forEach>
+            </div>
+        </c:if>
+
+    </div>
+
+    <jsp:include page="includes/footer.jsp"></jsp:include>
+    
+</div>
+
+
 
 
 </body>
