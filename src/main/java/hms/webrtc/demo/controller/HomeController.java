@@ -14,15 +14,18 @@
 package hms.webrtc.demo.controller;
 
 
-import hms.webrtc.demo.api.WebRTCApi;
+import hms.webrtc.api.WebRTCApi;
 import hms.webrtc.demo.controller.bean.AdItemForm;
 import hms.webrtc.demo.controller.bean.AdvertisementType;
 import hms.webrtc.demo.domain.AdItem;
 import hms.webrtc.demo.service.AdItemService;
+import hms.webrtc.demo.util.ResponseCode;
+import hms.webrtc.demo.util.ResponseKey;
 import hms.webrtc.demo.util.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -48,11 +51,18 @@ public class HomeController {
     private static final String FILE_UPLOAD_LOCATION = "../webapps/images/";
     private String uploadPosterURL;
 
+    private static @Value("${app.id}") String appId;
+    private static @Value("${app.password}") String appPassword;
+
+    private static @Value("${create.component.url}") String createComponentUrl;
+    private static @Value("${request.script.url}") String requestScriptUrl;
+    private static @Value("${revoke.component.url}") String revokeComponentUrl;
+
     @Autowired
     private AdItemService adItemService;
 
-    @Autowired
-    private WebRTCApi webRTCApi;
+    private WebRTCApi webRTCApi = new WebRTCApi();
+
 
     @RequestMapping(value = "/listAds", method = RequestMethod.GET)
     public ModelAndView homePage(ModelMap model) {
@@ -85,16 +95,31 @@ public class HomeController {
 
         if (!result.hasErrors()) {
             String adId = UUID.randomUUID().toString();
-            Boolean isComponentCreated = webRTCApi.createComponent(adId, adItemForm.getMobileNumber());
+            Map<String, Object> createComponentResponse = webRTCApi.createComponent(createComponentUrl, appId, appPassword,
+                    adId, adItemForm.getMobileNumber());
 
-            if (isComponentCreated) {
-                String requestedScript = webRTCApi.requestScript(adId);
-                boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId, requestedScript, uploadPosterURL);
-                if (isAdItemCreated) {
-                    modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
+            if (ResponseCode.S1000.name().equals(createComponentResponse.get(ResponseKey.STATUS_CODE))) {
+                Map<String, Object> requestedScriptResp = webRTCApi.requestScript(requestScriptUrl, appId, appPassword, adId);
+
+                if (ResponseCode.S1000.name().equals(requestedScriptResp.get(ResponseKey.STATUS_CODE))) {
+                    String requestedScript =  (String) requestedScriptResp.get(ResponseKey.SCRIPT);
+                    boolean isAdItemCreated = adItemService.saveAdItem(adItemForm, adId,
+                            requestedScript, uploadPosterURL);
+
+                    if (isAdItemCreated) {
+                        modelAndView.addObject("successMessage", "You have Successfully Created the Ad unit.");
+                    } else {
+                        logger.debug("Error occurred while Saving to DB.");
+                        modelAndView.addObject("errorMessage", "Error occurred while processing.");
+                    }
                 } else {
+                    logger.debug("Error occurred while processing Requested Script.");
                     modelAndView.addObject("errorMessage", "Error occurred while processing.");
                 }
+
+            } else {
+                logger.debug("Error occurred while processing - create component.");
+                modelAndView.addObject("errorMessage", "Error occurred while processing.");
             }
         }
         return modelAndView;

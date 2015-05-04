@@ -49,28 +49,11 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 
     <bean id="adItemService" class="hms.webrtc.demo.service.AdItemService"
           depends-on="restTemplateFixer">
-        <property name="webRTCApi"  ref="webrtcApi"/>
         <property name="msisdnPatternOne" value="${msisdn.pattern.one}"/>
         <property name="msisdnPatternTwo" value="${msisdn.pattern.two}"/>
         <property name="codeOne" value="${code.one}"/>
         <property name="codeTwo" value="${code.two}"/>
     </bean>
-
-    <bean id="webrtcApi" class="hms.webrtc.demo.api.WebRTCApi">
-        <property name="restTemplate" ref="restTemplate"/>
-        <property name="appId" value="${app.id}"/>
-        <property name="appPassword" value="${app.password}"/>
-        <property name="requestScriptUrl" value="${request.script.url}"/>
-        <property name="createComponentUrl" value="${create.component.url}"/>
-        <property name="revokeComponentUrl" value="${revoke.component.url}"/>
-    </bean>
-
-    <!--<bean id="subscriberValidator" class="hms.webrtc.demo.service.SubscriberValidator">-->
-        <!--<property name="msisdnPatternOne" value="${msisdn.pattern.one}"/>-->
-        <!--<property name="msisdnPatternTwo" value="${msisdn.pattern.two}"/>-->
-        <!--<property name="msisdnPatternThree" value="${msisdn.pattern.three}"/>-->
-    <!--</bean>-->
-
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
