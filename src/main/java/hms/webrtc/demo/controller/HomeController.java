@@ -51,12 +51,20 @@ public class HomeController {
     private static final String FILE_UPLOAD_LOCATION = "../webapps/images/";
     private String uploadPosterURL;
 
-    private static @Value("${app.id}") String appId;
-    private static @Value("${app.password}") String appPassword;
+    @Value("${app.id}")
+    public String appId;
 
-    private static @Value("${create.component.url}") String createComponentUrl;
-    private static @Value("${request.script.url}") String requestScriptUrl;
-    private static @Value("${revoke.component.url}") String revokeComponentUrl;
+    @Value("${app.password}")
+    public String appPassword;
+
+    @Value("${create.component.url}")
+    public String createComponentUrl;
+
+    @Value("${request.script.url}")
+    public String requestScriptUrl;
+
+    @Value("${revoke.component.url}")
+    public String revokeComponentUrl;
 
     @Autowired
     private AdItemService adItemService;
