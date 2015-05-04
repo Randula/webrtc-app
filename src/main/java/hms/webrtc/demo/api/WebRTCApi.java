@@ -39,7 +39,7 @@ public class WebRTCApi {
     }
 
     public String requestScript(String adId) {
-        final String scriptUrl =  createScriptUrl(requestScriptUrl, adId, appPassword, adId);
+        final String scriptUrl =  createScriptUrl(requestScriptUrl, appId, appPassword, adId);
         Map<String, Object> apiScriptResponse = restTemplate.getForObject(scriptUrl, Map.class);
         if (ResponseCode.S1000.name().equals(apiScriptResponse.get(ResponseKey.STATUS_CODE))) {
             return (String) apiScriptResponse.get(ResponseKey.SCRIPT);
